@@ -113,7 +113,16 @@ class CustomField extends StatelessWidget {
                     color: hintColor ?? Cores.cinza[200],
                     fontWeight: Fontes.normal,
                   ),
-                  focusedBorder: InputBorder.none,
+                  focusedBorder: exibirBordaErro
+                      ? OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(4),
+                          ),
+                          borderSide: BorderSide(
+                            color: borderColor,
+                          ),
+                        )
+                      : InputBorder.none,
                   enabledBorder: exibirBordaErro
                       ? OutlineInputBorder(
                           borderRadius: BorderRadius.all(

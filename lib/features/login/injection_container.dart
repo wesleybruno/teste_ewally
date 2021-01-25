@@ -1,3 +1,4 @@
+import 'package:ewally/features/login/usecases/limpar_cabecalhos_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:ewally/configs/utils/LocalStorage.dart';
 import 'package:ewally/configs/utils/RequestApiProvider.dart';
@@ -35,6 +36,12 @@ class LoginInjection {
       ),
     );
 
+    dependencia.registerSingleton<LimparCabecalhosLocalLoginUseCase>(
+      LimparCabecalhosLocalLoginUseCase(
+        loginRepository: dependencia<LoginRepository>(),
+      ),
+    );
+
     dependencia.registerLazySingleton<RealizarLoginUseCase>(
       () => RealizarLoginUseCase(
         loginRepository: dependencia<LoginRepository>(),
@@ -43,7 +50,6 @@ class LoginInjection {
 
     dependencia.registerFactory(
       () => LoginScreenCubit(
-        validadorEmail: ValidadorEmail(),
         validadorTamanho: ValidadorTamanho(),
         realizarLoginUseCase: dependencia<RealizarLoginUseCase>(),
         gravarCabecalhosLocalLoginUseCase:

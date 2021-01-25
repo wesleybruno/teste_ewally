@@ -1,3 +1,4 @@
+import 'package:ewally/features/home/screen/home_screen.dart';
 import 'package:ewally/features/login/screen/login_screen.dart';
 import 'package:ewally/features/splash/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,13 @@ abstract class AppRoutes {
       SailorRoute(
         name: AppRoutes.login,
         builder: (context, args, params) => Scaffold(body: LoginScreen()),
+        defaultTransitions: [
+          SailorTransition.slide_from_right,
+        ],
+      ),
+      SailorRoute(
+        name: AppRoutes.home,
+        builder: (context, args, params) => Scaffold(body: HomeScreen()),
         defaultTransitions: [
           SailorTransition.slide_from_right,
         ],

@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     _buildLogo(),
                     _buildCampoForm(
-                      Strings.email,
+                      Strings.username,
                       _controllerEmail,
                       state is CredenciaisInvalidasState,
                       false,

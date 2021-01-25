@@ -4,6 +4,7 @@ import 'package:ewally/configs/routes/app/app_navigator.dart';
 import 'package:ewally/configs/routes/app/i_app_navigator.dart';
 import 'package:ewally/configs/utils/LocalStorage.dart';
 import 'package:ewally/configs/utils/RequestApiProvider.dart';
+import 'package:ewally/features/home/injection_container.dart';
 import 'package:ewally/features/login/injection_container.dart';
 import 'package:ewally/features/splash/injection_container.dart';
 import 'package:get_it/get_it.dart';
@@ -34,5 +35,6 @@ Future<void> init() async {
   );
 
   SplashInjection()..injetar(dependencia);
+  HomeInjection()..injetar(dependencia);
   LoginInjection()..injetar(dependencia);
 }

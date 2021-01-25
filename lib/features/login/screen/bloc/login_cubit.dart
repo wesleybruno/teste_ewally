@@ -10,25 +10,22 @@ part 'login_state.dart';
 class LoginScreenCubit extends Cubit<LoginState> {
   final RealizarLoginUseCase _realizarLoginUseCase;
   final GravarCabecalhosLocalLoginUseCase _gravarCabecalhosLocalLoginUseCase;
-  final ValidadorEmail _validadorEmail;
   final ValidadorTamanho _validadorTamanho;
 
   LoginScreenCubit({
     @required
         GravarCabecalhosLocalLoginUseCase gravarCabecalhosLocalLoginUseCase,
     @required RealizarLoginUseCase realizarLoginUseCase,
-    @required ValidadorEmail validadorEmail,
     @required ValidadorTamanho validadorTamanho,
   })  : _gravarCabecalhosLocalLoginUseCase = gravarCabecalhosLocalLoginUseCase,
         _realizarLoginUseCase = realizarLoginUseCase,
-        _validadorEmail = validadorEmail,
         _validadorTamanho = validadorTamanho,
         super(
           LoginInicialState(),
         );
 
   bool _validarLogin(String email) =>
-      _validadorEmail.isTextoValido(texto: email);
+      _validadorTamanho.isTextoValido(texto: email);
 
   bool _validarSenha(String senha) =>
       _validadorTamanho.isTextoValido(texto: senha);

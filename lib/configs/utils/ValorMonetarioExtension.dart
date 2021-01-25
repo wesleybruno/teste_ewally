@@ -6,7 +6,7 @@ final _formatter = NumberFormat.currency(
   decimalDigits: 2,
 );
 
-extension ValorMonetario on double {
+extension ValorMonetario on num {
   String get emReal {
     return _formatter.format(this);
   }
