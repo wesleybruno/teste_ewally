@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:ewally/features/home/datasource/saldo_datasource.dart';
+import 'package:ewally/features/home/models/buscar_extrato_model.dart';
 import 'package:ewally/features/home/models/extrato_model.dart';
 import 'package:ewally/features/home/models/saldo_model.dart';
 import 'package:ewally/features/home/repository/extrato_decode_helper.dart';
@@ -33,9 +34,13 @@ class SaldoRepository {
     String initialDate,
     String finalDate,
   ) async {
+    final buscarExtratoModel = BuscarExtratoModel.fromDataString(
+      initialDate,
+      finalDate,
+    );
+
     final result = await this._dataSource.buscarExtrato(
-          initialDate,
-          finalDate,
+          map: buscarExtratoModel.toJson(),
         );
     return _extratoDecodeHelper.decodeExtrato(result: result);
   }

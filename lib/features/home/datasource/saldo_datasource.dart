@@ -4,7 +4,7 @@ import 'package:ewally/configs/utils/Endpoint.dart';
 import 'package:ewally/configs/utils/RequestApiProvider.dart';
 
 abstract class ISaldoDataSource {
-  Future<ApiResult> buscarExtrato(String termoBusca, String finalDate);
+  Future<ApiResult> buscarExtrato({Map<String, dynamic> map});
   Future<ApiResult> buscarSaldo();
 }
 
@@ -27,13 +27,13 @@ class SaldoDataSource implements ISaldoDataSource {
   }
 
   @override
-  Future<ApiResult> buscarExtrato(String termoBusca, String finalDate) async {
+  Future<ApiResult> buscarExtrato({Map<String, dynamic> map}) async {
     return await _requestApiProvider.execute(
       Endpoint(
         data: null,
         queryParameters: <String, dynamic>{
-          'initialDate': termoBusca,
-          'finalDate': finalDate
+          'initialDate': map["initialDate"],
+          'finalDate': map["finalDate"]
         },
         method: EndPointMethod.get,
         url: '/b2b/statement',

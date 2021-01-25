@@ -55,7 +55,7 @@ class HomeInjection {
     dependencia.registerFactory(
       () => ExtratoCubit(
         buscarExtratoUseCase: dependencia<BuscarExtratoUseCase>(),
-        validadorTamanho: ValidadorTamanho(),
+        validadorTamanho: ValidadorFormatoData(),
       ),
     );
   }

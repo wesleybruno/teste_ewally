@@ -1,0 +1,135 @@
+import 'package:ewally/configs/ui/Cores.dart';
+import 'package:ewally/configs/ui/DimensoesTela.dart';
+import 'package:ewally/configs/ui/Fontes.dart';
+import 'package:ewally/configs/ui/Strings.dart';
+import 'package:ewally/features/home/models/extrato_model.dart';
+import 'package:ewally/configs/utils/DateTimeExtension.dart';
+import 'package:ewally/configs/utils/ValorMonetarioExtension.dart';
+import 'package:flutter/material.dart';
+
+abstract class ExpansionItemFactory {
+  static String formatString(String operation) {
+    final primeiraLetra = operation[0].toUpperCase();
+    final restante = operation.replaceAll('_', ' ').toLowerCase().substring(1);
+    return '$primeiraLetra$restante';
+  }
+
+  static String formatStringQuebraLinha(String descricao) {
+    final descricaoFormatada = descricao.replaceAll('@', '\n');
+    return descricaoFormatada;
+  }
+
+  static Widget buildListItens(ExtratoModel extrato) {
+    if (extrato.statement.length == 0)
+      return Container(
+        child: Text(
+          Strings.nenhumaInformacao,
+          style: TextStyle(
+            fontSize: 16.ssp,
+            color: Cores.preto,
+            fontFamily: Fontes.montserrat,
+          ),
+        ),
+      );
+
+    final List<Widget> _listaWidgets = List.generate(
+      extrato.statement?.length,
+      (index) => ExpansionTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  extrato.statement[index].createdAt.formatarDateTimeEmPtBr,
+                  style: TextStyle(
+                    fontSize: 12.ssp,
+                    color: Cores.preto,
+                    fontFamily: Fontes.montserrat,
+                  ),
+                ),
+                Text(
+                  ExpansionItemFactory.formatString(
+                    extrato.statement[index].operationType,
+                  ),
+                  style: TextStyle(
+                      fontSize: 12.ssp,
+                      color: Cores.preto,
+                      fontFamily: Fontes.montserrat,
+                      fontWeight: Fontes.semiBold),
+                ),
+              ],
+            ),
+            Text(
+              extrato.statement[index].amount.emRealComSinal,
+              style: TextStyle(
+                fontSize: 12.ssp,
+                color: extrato.statement[index].amount < 0
+                    ? Cores.vermelhorErro
+                    : Cores.preto,
+                fontFamily: Fontes.montserrat,
+              ),
+            )
+          ],
+        ),
+        children: [
+          ExpansionItemFactory.buildOtherInfo(
+              extrato.statement[index].otherInfo),
+        ],
+      ),
+    );
+
+    return Column(
+      children: _listaWidgets,
+    );
+  }
+
+  static buildOtherInfo(OtherInfo otherInfo) {
+    return Container(
+      padding: EdgeInsets.all(12.w),
+      width: double.infinity,
+      color: Cores.claro,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (otherInfo.userLatitude != null)
+            Text(
+              'Latitude: ${otherInfo.userLatitude.toString()}',
+              style: TextStyle(
+                fontSize: 14.ssp,
+                color: Cores.preto,
+                fontFamily: Fontes.montserrat,
+              ),
+            ),
+          if (otherInfo.userLongitude != null)
+            Padding(
+              padding: EdgeInsets.only(top: 8.w),
+              child: Text(
+                'Longitude: ${otherInfo.userLongitude.toString()}',
+                style: TextStyle(
+                  fontSize: 14.ssp,
+                  color: Cores.preto,
+                  fontFamily: Fontes.montserrat,
+                ),
+              ),
+            ),
+          if (otherInfo.cupom != null)
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(top: 15.w),
+              child: Text(
+                ExpansionItemFactory.formatStringQuebraLinha(otherInfo.cupom),
+                style: TextStyle(
+                  fontSize: 14.ssp,
+                  color: Cores.preto,
+                  fontFamily: Fontes.montserrat,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}

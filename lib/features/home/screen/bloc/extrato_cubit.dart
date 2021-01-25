@@ -9,10 +9,10 @@ import 'package:ewally/configs/utils/Validadores.dart';
 part 'extrato_state.dart';
 
 class ExtratoCubit extends Cubit<ExtratoState> with UnauthorizedMixin {
-  final ValidadorTamanho _validadorTamanho;
+  final ValidadorFormatoData _validadorTamanho;
   final BuscarExtratoUseCase _buscarExtratoUseCase;
   ExtratoCubit({
-    @required ValidadorTamanho validadorTamanho,
+    @required ValidadorFormatoData validadorTamanho,
     @required BuscarExtratoUseCase buscarExtratoUseCase,
   })  : _validadorTamanho = validadorTamanho,
         _buscarExtratoUseCase = buscarExtratoUseCase,

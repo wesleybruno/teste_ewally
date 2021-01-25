@@ -2,11 +2,14 @@ import 'package:ewally/configs/ui/Cores.dart';
 import 'package:ewally/configs/ui/DimensoesTela.dart';
 import 'package:ewally/configs/ui/Fontes.dart';
 import 'package:ewally/configs/ui/Strings.dart';
+import 'package:ewally/features/home/models/extrato_model.dart';
 import 'package:ewally/features/home/screen/bloc/extrato_cubit.dart';
 import 'package:ewally/features/home/screen/bloc/saldo_cubit.dart';
+import 'package:ewally/features/home/screen/widget/expansion_item_factory.dart';
 import 'package:ewally/injection_container.dart';
 import 'package:ewally/widgets/botao_principal/botao_principal.dart';
 import 'package:ewally/configs/utils/ValorMonetarioExtension.dart';
+
 import 'package:ewally/widgets/campo_form/campo_form.dart';
 import 'package:ewally/widgets/error_widgets/erro_api_widget.dart';
 import 'package:ewally/widgets/error_widgets/sem_internet_widget.dart';
@@ -134,14 +137,18 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
             ),
             _buildButton(
-              extratoState is DadosValidoState,
+              !(extratoState is DadosInvalidoState) &&
+                  !(extratoState is LoadingExtratoState),
               extratoState is LoadingExtratoState,
               context,
-            )
+            ),
+            if (extratoState is ExtratoUsuarioReturn)
+              ExpansionItemFactory.buildListItens(extratoState.extratoModel)
           ],
         ),
       );
     }
+
     return Container();
   }
 

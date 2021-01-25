@@ -21,4 +21,6 @@ abstract class Strings {
   static const tenteMaisTarde =
       'Parece que ocorreu algum erro, por favor tente mais tarde.';
   static const desculpe = 'Desculpe... Algo não está certo.';
+
+  static const nenhumaInformacao = 'Nenhuma informação encontrada!';
 }
