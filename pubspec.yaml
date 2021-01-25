@@ -1,0 +1,42 @@
+name: ewally
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  bloc_test: ^7.0.0
+  cached_network_image: ^2.5.0
+  connectivity: ^2.0.2
+  cupertino_icons: ^1.0.0
+  dartz: ^0.9.1
+  dio: ^3.0.10
+  equatable: ^1.2.5
+  flutter_bloc: ^6.1.1
+  get_it: ^5.0.3
+  intl: ^0.16.0
+  sailor: ^0.7.1
+  shared_preferences: ^0.5.12+4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^4.1.1
+  test: any
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/pictures/
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-ExtraBold.otf
+          weight: 800
+        - asset: fonts/Montserrat-Regular.ttf
