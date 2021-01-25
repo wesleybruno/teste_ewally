@@ -9,7 +9,7 @@ class EwallySelecao extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ioasys',
+      title: 'EWally',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: Fontes.montserrat,

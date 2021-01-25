@@ -5,6 +5,7 @@ import 'package:ewally/configs/routes/app/i_app_navigator.dart';
 import 'package:ewally/configs/utils/LocalStorage.dart';
 import 'package:ewally/configs/utils/RequestApiProvider.dart';
 import 'package:ewally/features/login/injection_container.dart';
+import 'package:ewally/features/splash/injection_container.dart';
 import 'package:get_it/get_it.dart';
 
 final dependencia = GetIt.instance;
@@ -32,5 +33,6 @@ Future<void> init() async {
     AppNavigator(),
   );
 
+  SplashInjection()..injetar(dependencia);
   LoginInjection()..injetar(dependencia);
 }

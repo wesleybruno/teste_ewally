@@ -1,9 +1,11 @@
+import 'package:ewally/configs/ui/Cores.dart';
+import 'package:ewally/configs/ui/Icones.dart';
+import 'package:ewally/widgets/svg_image/svg_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ewally/configs/routes/app/i_app_navigator.dart';
 import 'package:ewally/configs/ui/DimensoesTela.dart';
-import 'package:ewally/configs/ui/Icones.dart';
 import 'package:ewally/features/splash/screens/bloc/splash_cubit.dart';
 import 'package:ewally/injection_container.dart';
 
@@ -42,21 +44,27 @@ class _SplashScreenState extends State<SplashScreen> {
               children: [
                 Container(
                   height: double.infinity,
-                  child: Image.asset(
-                    IconesAplicacao.background,
-                    fit: BoxFit.cover,
-                  ),
+                  color: Cores.branco,
+                  child: Container(),
                 ),
-                Center(
-                  child: Container(
-                    padding: EdgeInsets.all(100.w),
-                    child: Container(),
-                  ),
-                )
+                _buildLogo()
               ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  _buildLogo() {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.only(top: 100.h, bottom: 50.h),
+        height: 50.h,
+        width: 50.w,
+        child: SvgImage(
+          icone: IconesAplicacao.logo,
+        ),
       ),
     );
   }

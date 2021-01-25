@@ -101,7 +101,7 @@ class CampoForm extends StatelessWidget {
               ),
           child: CustomField(
             hintText: hintText,
-            hintColor: hintColor ?? Cores.ruby,
+            hintColor: hintColor ?? Cores.pantone,
             enable: enable,
             onFocus: onFocus,
             max: max,

@@ -47,7 +47,7 @@ class BotaoPrincipal extends StatelessWidget {
         width: largura,
         decoration: BoxDecoration(
           color: habilitar
-              ? (corFundo ?? Cores.ruby)
+              ? (corFundo ?? Cores.pantone)
               : corDesabilitado ?? Cores.claro,
           border: Border.all(color: corBorda ?? Cores.branco),
           borderRadius: BorderRadius.all(

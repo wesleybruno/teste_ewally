@@ -1,6 +1,7 @@
 import 'package:ewally/widgets/botao_principal/botao_principal.dart';
 import 'package:ewally/widgets/campo_form/campo_form.dart';
 import 'package:ewally/widgets/error_widgets/sem_internet_widget.dart';
+import 'package:ewally/widgets/svg_image/svg_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ewally/configs/routes/app/i_app_navigator.dart';
@@ -88,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    _buildLogo(),
                     _buildCampoForm(
                       Strings.email,
                       _controllerEmail,
@@ -123,6 +125,17 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  _buildLogo() {
+    return Container(
+      margin: EdgeInsets.only(top: 100.h, bottom: 50.h),
+      height: 50.h,
+      width: 50.w,
+      child: SvgImage(
+        icone: IconesAplicacao.logo,
       ),
     );
   }

@@ -6,7 +6,7 @@ class CustomDio {
   Dio client;
   CustomDio() {
     client = Dio();
-    client.options.baseUrl = 'https://empresas.ioasys.com.br/api';
+    client.options.baseUrl = 'https://apidev.ewally.com.br';
     client.interceptors.add(
       RequestHeaderInterceptor(),
     );
