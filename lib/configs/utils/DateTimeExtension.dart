@@ -61,6 +61,16 @@ extension FormatadorDateTimeToString on DateTime {
 }
 
 extension FormatadorStringToDateTime on String {
+  String get primeiroNumero {
+    if (this == null) {
+      return '';
+    }
+    final dateTime = DateTime.parse(this);
+    initializeDateFormatting('pt_BR', null);
+    final formatted = DateFormat('dd').format(dateTime);
+    return formatted;
+  }
+
   String get formatarDataString {
     if (this == null) {
       return '';

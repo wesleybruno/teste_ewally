@@ -2,9 +2,10 @@ import 'package:ewally/configs/ui/Cores.dart';
 import 'package:ewally/configs/ui/DimensoesTela.dart';
 import 'package:ewally/configs/ui/Fontes.dart';
 import 'package:ewally/configs/ui/Strings.dart';
+import 'package:ewally/features/home/models/extrato_model.dart';
 import 'package:ewally/features/home/screen/bloc/extrato_cubit.dart';
 import 'package:ewally/features/home/screen/bloc/saldo_cubit.dart';
-import 'package:ewally/features/home/screen/widget/expansion_item_factory.dart';
+import 'package:ewally/features/home/screen/widget/content_factory.dart';
 import 'package:ewally/injection_container.dart';
 import 'package:ewally/widgets/botao_principal/botao_principal.dart';
 import 'package:ewally/configs/utils/ValorMonetarioExtension.dart';
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _controllerPeriodoInicio;
   TextEditingController _controllerPeriodoFim;
   DateTime selectedDate = DateTime.now();
+  TipoExibicao _tipoExibicao = TipoExibicao.GRAFICO;
 
   @override
   void initState() {
@@ -52,7 +54,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _selecionarData(
-      BuildContext context, TextEditingController controller) async {
+    BuildContext context,
+    TextEditingController controller,
+  ) async {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
@@ -81,6 +85,15 @@ class _HomeScreenState extends State<HomeScreen> {
     FocusManager.instance.primaryFocus.unfocus();
   }
 
+  _aoApertarIconeTipoVizualizacao(
+    ExtratoModel extrato,
+    TipoExibicao tipoExibicao,
+  ) {
+    setState(() {
+      _tipoExibicao = tipoExibicao;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -103,7 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _buildContent(BuildContext context, SaldoState saldoState) {
+  _buildContent(
+    BuildContext context,
+    SaldoState saldoState,
+  ) {
     if (saldoState is LoadingState)
       return Center(
         child: CircularProgressIndicator(),
@@ -144,8 +160,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 extratoState is LoadingExtratoState,
                 context,
               ),
-              if (extratoState is ExtratoUsuarioReturn)
-                ExpansionItemFactory.buildListItens(extratoState.extratoModel)
+              if (extratoState is ExtratoUsuarioReturn) ...[
+                _buildSelectTypeContent(extratoState.extratoModel),
+                ContentFactory.buildContent(
+                  extratoState.extratoModel,
+                  _tipoExibicao,
+                )
+              ],
             ],
           );
         }),
@@ -164,6 +185,40 @@ class _HomeScreenState extends State<HomeScreen> {
           fontSize: 20.ssp,
           fontFamily: Fontes.montserrat,
         ),
+      ),
+    );
+  }
+
+  _buildSelectTypeContent(ExtratoModel extrato) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20.h),
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          IconButton(
+            iconSize: 30.w,
+            icon: Icon(Icons.add_chart),
+            onPressed: () => _aoApertarIconeTipoVizualizacao(
+              extrato,
+              TipoExibicao.GRAFICO,
+            ),
+            color: _tipoExibicao == TipoExibicao.GRAFICO
+                ? Cores.pantone
+                : Cores.cinza[200],
+          ),
+          IconButton(
+            iconSize: 30.w,
+            icon: Icon(Icons.library_books),
+            color: _tipoExibicao == TipoExibicao.LISTA
+                ? Cores.pantone
+                : Cores.cinza[200],
+            onPressed: () => _aoApertarIconeTipoVizualizacao(
+              extrato,
+              TipoExibicao.LISTA,
+            ),
+          )
+        ],
       ),
     );
   }
@@ -203,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
         left: 30.w,
         right: 30.w,
         top: 30.h,
-        bottom: 80.h,
+        bottom: 20.h,
       ),
       child: BotaoPrincipal(
         aoClicar: () => _aoApertarBuscar(context),

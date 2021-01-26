@@ -5,9 +5,13 @@ import 'package:ewally/configs/ui/Strings.dart';
 import 'package:ewally/features/home/models/extrato_model.dart';
 import 'package:ewally/configs/utils/DateTimeExtension.dart';
 import 'package:ewally/configs/utils/ValorMonetarioExtension.dart';
+import 'package:ewally/features/home/screen/widget/chart_widget.dart/chart_widget.dart';
+import 'package:ewally/features/home/screen/widget/chart_widget.dart/chart_view_model.dart';
 import 'package:flutter/material.dart';
 
-abstract class ExpansionItemFactory {
+enum TipoExibicao { GRAFICO, LISTA }
+
+abstract class ContentFactory {
   static String formatString(String operation) {
     final primeiraLetra = operation[0].toUpperCase();
     final restante = operation.replaceAll('_', ' ').toLowerCase().substring(1);
@@ -19,18 +23,61 @@ abstract class ExpansionItemFactory {
     return descricaoFormatada;
   }
 
-  static Widget buildListItens(ExtratoModel extrato) {
-    if (extrato.statement.length == 0)
-      return Container(
-        child: Text(
-          Strings.nenhumaInformacao,
-          style: TextStyle(
-            fontSize: 16.ssp,
-            color: Cores.preto,
-            fontFamily: Fontes.montserrat,
-          ),
+  static Widget _noData() {
+    return Container(
+      child: Text(
+        Strings.nenhumaInformacao,
+        style: TextStyle(
+          fontSize: 16.ssp,
+          color: Cores.preto,
+          fontFamily: Fontes.montserrat,
+        ),
+      ),
+    );
+  }
+
+  static Widget buildContent(
+    ExtratoModel extrato,
+    TipoExibicao tipoExibicao,
+  ) {
+    switch (tipoExibicao) {
+      case TipoExibicao.GRAFICO:
+        return ContentFactory._buildChart(extrato);
+      default:
+        return ContentFactory._buildListItens(extrato);
+    }
+  }
+
+  static Widget _buildChart(ExtratoModel extrato) {
+    List<ChartData> chartData = [];
+
+    final List<Statement> listStatement = extrato.statement;
+
+    if (listStatement.length == 0) return ContentFactory._noData();
+
+    listStatement.forEach((Statement statement) {
+      chartData.add(
+        ChartData(
+          dayNumber: statement.createdAt.primeiroNumero,
+          totalAmount: statement.amount / 100,
         ),
       );
+    });
+
+    final chartViewModel = ChartViewModel.createModel(chartData);
+
+    final chart = SimpleBarChart(chartViewModel, animate: false);
+
+    return Container(
+      height: 250.h,
+      width: 250.w,
+      margin: EdgeInsets.only(bottom: 25.h),
+      child: chart,
+    );
+  }
+
+  static Widget _buildListItens(ExtratoModel extrato) {
+    if (extrato.statement.length == 0) return ContentFactory._noData();
 
     final List<Widget> _listaWidgets = List.generate(
       extrato.statement?.length,
@@ -50,7 +97,7 @@ abstract class ExpansionItemFactory {
                   ),
                 ),
                 Text(
-                  ExpansionItemFactory.formatString(
+                  ContentFactory.formatString(
                     extrato.statement[index].operationType,
                   ),
                   style: TextStyle(
@@ -74,7 +121,7 @@ abstract class ExpansionItemFactory {
           ],
         ),
         children: [
-          ExpansionItemFactory.buildOtherInfo(
+          ContentFactory._buildOtherInfo(
             extrato.statement[index].otherInfo,
           ),
         ],
@@ -86,7 +133,7 @@ abstract class ExpansionItemFactory {
     );
   }
 
-  static buildOtherInfo(OtherInfo otherInfo) {
+  static Widget _buildOtherInfo(OtherInfo otherInfo) {
     return Container(
       padding: EdgeInsets.all(12.w),
       width: double.infinity,
@@ -120,7 +167,7 @@ abstract class ExpansionItemFactory {
               width: double.infinity,
               padding: EdgeInsets.only(top: 15.w),
               child: Text(
-                ExpansionItemFactory.formatStringQuebraLinha(otherInfo.cupom),
+                ContentFactory.formatStringQuebraLinha(otherInfo.cupom),
                 style: TextStyle(
                   fontSize: 14.ssp,
                   color: Cores.preto,
