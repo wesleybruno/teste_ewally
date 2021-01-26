@@ -11,6 +11,7 @@ class IconesAplicacao {
 
   static String get iconeErro => _comum(nomeIcone: 'icone_erro');
   static String get iconeOlho => _comum(nomeIcone: 'icone_olho');
+  static String get iconeFechado => _comum(nomeIcone: 'olho_fechado');
 
   static String get logo => _svg(nomeIcone: 'logo');
 }

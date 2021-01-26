@@ -109,7 +109,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       true,
                       icone: state is CredenciaisInvalidasState
                           ? IconesAplicacao.iconeErro
-                          : IconesAplicacao.iconeOlho,
+                          : _esconderSenha
+                              ? IconesAplicacao.iconeFechado
+                              : IconesAplicacao.iconeOlho,
                       aoApertarIcone: () => _aoApertarIconeOlho(),
                     ),
                     if (state is CredenciaisInvalidasState)
