@@ -15,7 +15,7 @@ class SplashCubit extends Cubit<SplashState> {
         super(SplashInitial());
 
   buscarDadosCabecalhos() async {
-    await new Future.delayed(new Duration(milliseconds: 2000), () {});
+    await Future.delayed(new Duration(milliseconds: 2000), () {});
     final result = await _buscarCabecalhosLocalLoginUseCase();
 
     if (result.token != null) {

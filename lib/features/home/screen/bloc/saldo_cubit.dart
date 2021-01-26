@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'saldo_state.dart';
 
-class SaldoCubit extends Cubit<HomeState> with UnauthorizedMixin {
+class SaldoCubit extends Cubit<SaldoState> with UnauthorizedMixin {
   final BuscarSaldoUseCase _buscarSaldoUseCase;
   SaldoCubit({
     @required BuscarSaldoUseCase buscarSaldoUseCase,

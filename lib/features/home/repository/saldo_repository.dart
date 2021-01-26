@@ -5,12 +5,8 @@ import 'package:ewally/features/home/models/extrato_model.dart';
 import 'package:ewally/features/home/models/saldo_model.dart';
 import 'package:ewally/features/home/repository/extrato_decode_helper.dart';
 import 'package:ewally/features/home/repository/saldo_decode_helper.dart';
-import 'package:ewally/features/login/model/login_model.dart';
-import 'package:ewally/features/login/model/token_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ewally/configs/utils/ApiResult.dart';
-import 'package:ewally/features/login/datasource/login_datasource.dart';
-import 'package:ewally/features/login/repository/login_decode_helper.dart';
 
 class SaldoRepository {
   SaldoRepository({

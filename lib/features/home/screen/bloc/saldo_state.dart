@@ -1,20 +1,20 @@
 part of 'saldo_cubit.dart';
 
-abstract class HomeState extends Equatable {
-  const HomeState();
+abstract class SaldoState extends Equatable {
+  const SaldoState();
 }
 
-class HomeInicialState extends HomeState {
+class HomeInicialState extends SaldoState {
   @override
   List<Object> get props => [];
 }
 
-class LoadingState extends HomeState {
+class LoadingState extends SaldoState {
   @override
   List<Object> get props => [];
 }
 
-class SaldoUsuarioReturn extends HomeState {
+class SaldoUsuarioReturn extends SaldoState {
   final SaldoModel saldoModel;
 
   SaldoUsuarioReturn({@required this.saldoModel});
@@ -22,12 +22,12 @@ class SaldoUsuarioReturn extends HomeState {
   List<Object> get props => [saldoModel];
 }
 
-class ApiReturnNoInternet extends HomeState {
+class ApiReturnNoInternet extends SaldoState {
   @override
   List<Object> get props => [];
 }
 
-class ApiReturnError extends HomeState {
+class ApiReturnError extends SaldoState {
   @override
   List<Object> get props => [];
 }

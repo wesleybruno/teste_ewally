@@ -75,7 +75,8 @@ abstract class ExpansionItemFactory {
         ),
         children: [
           ExpansionItemFactory.buildOtherInfo(
-              extrato.statement[index].otherInfo),
+            extrato.statement[index].otherInfo,
+          ),
         ],
       ),
     );

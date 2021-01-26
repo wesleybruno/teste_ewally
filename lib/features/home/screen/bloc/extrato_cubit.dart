@@ -9,12 +9,12 @@ import 'package:ewally/configs/utils/Validadores.dart';
 part 'extrato_state.dart';
 
 class ExtratoCubit extends Cubit<ExtratoState> with UnauthorizedMixin {
-  final ValidadorFormatoData _validadorTamanho;
+  final ValidadorFormatoData _validadorFormatoData;
   final BuscarExtratoUseCase _buscarExtratoUseCase;
   ExtratoCubit({
-    @required ValidadorFormatoData validadorTamanho,
+    @required ValidadorFormatoData validadorFormatoData,
     @required BuscarExtratoUseCase buscarExtratoUseCase,
-  })  : _validadorTamanho = validadorTamanho,
+  })  : _validadorFormatoData = validadorFormatoData,
         _buscarExtratoUseCase = buscarExtratoUseCase,
         super(
           ExtratoInicialState(),
@@ -22,8 +22,9 @@ class ExtratoCubit extends Cubit<ExtratoState> with UnauthorizedMixin {
 
   void validarDados(String periodoInicio, String periodoFim) {
     final periodoInicioValido =
-        _validadorTamanho.isTextoValido(texto: periodoInicio);
-    final periodoFimValido = _validadorTamanho.isTextoValido(texto: periodoFim);
+        _validadorFormatoData.isTextoValido(texto: periodoInicio);
+    final periodoFimValido =
+        _validadorFormatoData.isTextoValido(texto: periodoFim);
     if (periodoInicioValido && periodoFimValido) {
       emit(DadosValidoState());
     } else {

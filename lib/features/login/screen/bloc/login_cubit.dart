@@ -24,8 +24,8 @@ class LoginScreenCubit extends Cubit<LoginState> {
           LoginInicialState(),
         );
 
-  bool _validarLogin(String email) =>
-      _validadorTamanho.isTextoValido(texto: email);
+  bool _validarLogin(String username) =>
+      _validadorTamanho.isTextoValido(texto: username);
 
   bool _validarSenha(String senha) =>
       _validadorTamanho.isTextoValido(texto: senha);
@@ -41,9 +41,9 @@ class LoginScreenCubit extends Cubit<LoginState> {
     }
   }
 
-  void realizarLogin(String email, String password) async {
+  void realizarLogin(String username, String password) async {
     emit(LoadingState());
-    final result = await _realizarLoginUseCase(email, password);
+    final result = await _realizarLoginUseCase(username, password);
 
     result.fold((error) {
       if (error.statusCode == null) {

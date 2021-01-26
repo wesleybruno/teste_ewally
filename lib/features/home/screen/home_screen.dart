@@ -14,7 +14,6 @@ import 'package:ewally/widgets/error_widgets/erro_api_widget.dart';
 import 'package:ewally/widgets/error_widgets/sem_internet_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -95,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
             create: (context) => dependencia<ExtratoCubit>(),
           ),
         ],
-        child: BlocBuilder<SaldoCubit, HomeState>(
+        child: BlocBuilder<SaldoCubit, SaldoState>(
           builder: (context, state) {
             return _buildContent(context, state);
           },
@@ -104,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _buildContent(BuildContext context, HomeState saldoState) {
+  _buildContent(BuildContext context, SaldoState saldoState) {
     if (saldoState is LoadingState)
       return Center(
         child: CircularProgressIndicator(),
