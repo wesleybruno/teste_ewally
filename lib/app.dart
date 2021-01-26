@@ -3,6 +3,7 @@ import 'package:ewally/configs/ui/Cores.dart';
 import 'package:ewally/configs/ui/Fontes.dart';
 import 'package:ewally/features/splash/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sailor/sailor.dart';
 
 class EwallySelecao extends StatelessWidget {
@@ -24,6 +25,10 @@ class EwallySelecao extends StatelessWidget {
         body: SplashScreen(),
         backgroundColor: Cores.cinza[50],
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+      ],
+      supportedLocales: [const Locale('pt')],
     );
   }
 }

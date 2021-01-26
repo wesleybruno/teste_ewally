@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations: # Add this line
+    sdk: flutter         # Add this line
   bloc_test: ^7.0.0
   cached_network_image: ^2.5.0
   connectivity: ^2.0.2
