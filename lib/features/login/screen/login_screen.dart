@@ -1,3 +1,4 @@
+import 'package:ewally/features/login/login_strings.dart';
 import 'package:ewally/widgets/botao_principal/botao_principal.dart';
 import 'package:ewally/widgets/campo_form/campo_form.dart';
 import 'package:ewally/widgets/error_widgets/sem_internet_widget.dart';
@@ -9,7 +10,6 @@ import 'package:ewally/configs/ui/Cores.dart';
 import 'package:ewally/configs/ui/DimensoesTela.dart';
 import 'package:ewally/configs/ui/Fontes.dart';
 import 'package:ewally/configs/ui/Icones.dart';
-import 'package:ewally/configs/ui/Strings.dart';
 import 'package:ewally/features/login/screen/bloc/login_cubit.dart';
 import 'package:ewally/injection_container.dart';
 
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     _buildLogo(),
                     _buildCampoForm(
-                      Strings.username,
+                      LoginStrings.username,
                       _controllerEmail,
                       state is CredenciaisInvalidasState,
                       false,
@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       aoApertarIcone: null,
                     ),
                     _buildCampoForm(
-                      Strings.senha,
+                      LoginStrings.senha,
                       _controllerSenha,
                       state is CredenciaisInvalidasState,
                       _esconderSenha,
@@ -180,7 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
         right: 20.w,
       ),
       child: Text(
-        Strings.credenciaisInvalidas,
+        LoginStrings.credenciaisInvalidas,
         textAlign: TextAlign.right,
         style: TextStyle(
           fontSize: 12.ssp,
@@ -203,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
         exibirLoading: exibirLoading,
         habilitar: habilitar,
         corDesabilitado: Cores.cinza[200],
-        texto: Strings.entrar,
+        texto: LoginStrings.entrar,
         textStyle: TextStyle(
           fontSize: 16.ssp,
           fontWeight: Fontes.semiBold,

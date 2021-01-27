@@ -1,11 +1,11 @@
 import 'package:ewally/configs/ui/Cores.dart';
 import 'package:ewally/configs/ui/DimensoesTela.dart';
 import 'package:ewally/configs/ui/Fontes.dart';
-import 'package:ewally/configs/ui/Strings.dart';
 import 'package:ewally/features/home/models/extrato_model.dart';
 import 'package:ewally/features/home/screen/bloc/extrato_cubit.dart';
 import 'package:ewally/features/home/screen/bloc/saldo_cubit.dart';
 import 'package:ewally/features/home/screen/widget/content_factory.dart';
+import 'package:ewally/features/home/home_strings.dart';
 import 'package:ewally/injection_container.dart';
 import 'package:ewally/widgets/botao_principal/botao_principal.dart';
 import 'package:ewally/configs/utils/ValorMonetarioExtension.dart';
@@ -26,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _controllerPeriodoInicio;
   TextEditingController _controllerPeriodoFim;
   DateTime selectedDate = DateTime.now();
-  TipoExibicao _tipoExibicao = TipoExibicao.GRAFICO;
 
   @override
   void initState() {
@@ -86,12 +85,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _aoApertarIconeTipoVizualizacao(
+    BuildContext context,
     ExtratoModel extrato,
     TipoExibicao tipoExibicao,
   ) {
-    setState(() {
-      _tipoExibicao = tipoExibicao;
-    });
+    _esconderTeclado();
+    BlocProvider.of<ExtratoCubit>(context).alterarTipoExibicao(
+      extrato,
+      tipoExibicao,
+    );
   }
 
   @override
@@ -140,16 +142,17 @@ class _HomeScreenState extends State<HomeScreen> {
             BlocBuilder<ExtratoCubit, ExtratoState>(builder: (_, extratoState) {
           return Column(
             children: [
-              _buildText('Saldo atual ${saldoState.saldoModel.balance.emReal}'),
-              _buildText('Buscar Extrato'),
+              _buildText(
+                  HomeStrings.saldoAtual(saldoState.saldoModel.balance.emReal)),
+              _buildText(HomeStrings.buscarExtrato),
               _buildCampoForm(
-                Strings.periodoInicio,
+                HomeStrings.periodoInicio,
                 _controllerPeriodoInicio,
                 extratoState is ExtratoApiReturnError,
                 context,
               ),
               _buildCampoForm(
-                Strings.periodoFim,
+                HomeStrings.periodoFim,
                 _controllerPeriodoFim,
                 extratoState is ExtratoApiReturnError,
                 context,
@@ -161,10 +164,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 context,
               ),
               if (extratoState is ExtratoUsuarioReturn) ...[
-                _buildSelectTypeContent(extratoState.extratoModel),
+                _buildSelectTypeContent(
+                  context,
+                  extratoState.extratoModel,
+                  extratoState.tipoExibicao,
+                ),
                 ContentFactory.buildContent(
                   extratoState.extratoModel,
-                  _tipoExibicao,
+                  extratoState.tipoExibicao,
                 )
               ],
             ],
@@ -189,38 +196,46 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _buildSelectTypeContent(ExtratoModel extrato) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20.h),
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IconButton(
-            iconSize: 30.w,
-            icon: Icon(Icons.add_chart),
-            onPressed: () => _aoApertarIconeTipoVizualizacao(
-              extrato,
-              TipoExibicao.GRAFICO,
+  _buildSelectTypeContent(
+    BuildContext context,
+    ExtratoModel extrato,
+    TipoExibicao tipoExibicao,
+  ) {
+    return extrato.statement.isEmpty
+        ? Container()
+        : Container(
+            margin: EdgeInsets.only(bottom: 20.h),
+            width: double.infinity,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  iconSize: 30.w,
+                  icon: Icon(Icons.add_chart),
+                  onPressed: () => _aoApertarIconeTipoVizualizacao(
+                    context,
+                    extrato,
+                    TipoExibicao.GRAFICO,
+                  ),
+                  color: tipoExibicao == TipoExibicao.GRAFICO
+                      ? Cores.pantone
+                      : Cores.cinza[200],
+                ),
+                IconButton(
+                  iconSize: 30.w,
+                  icon: Icon(Icons.library_books),
+                  color: tipoExibicao == TipoExibicao.LISTA
+                      ? Cores.pantone
+                      : Cores.cinza[200],
+                  onPressed: () => _aoApertarIconeTipoVizualizacao(
+                    context,
+                    extrato,
+                    TipoExibicao.LISTA,
+                  ),
+                )
+              ],
             ),
-            color: _tipoExibicao == TipoExibicao.GRAFICO
-                ? Cores.pantone
-                : Cores.cinza[200],
-          ),
-          IconButton(
-            iconSize: 30.w,
-            icon: Icon(Icons.library_books),
-            color: _tipoExibicao == TipoExibicao.LISTA
-                ? Cores.pantone
-                : Cores.cinza[200],
-            onPressed: () => _aoApertarIconeTipoVizualizacao(
-              extrato,
-              TipoExibicao.LISTA,
-            ),
-          )
-        ],
-      ),
-    );
+          );
   }
 
   _buildCampoForm(
@@ -265,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
         exibirLoading: exibirLoading,
         habilitar: habilitar,
         corDesabilitado: Cores.cinza[200],
-        texto: Strings.buscacr,
+        texto: HomeStrings.buscacr,
         textStyle: TextStyle(
           fontSize: 16.ssp,
           fontWeight: Fontes.semiBold,

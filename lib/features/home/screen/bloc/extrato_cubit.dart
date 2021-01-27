@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:ewally/configs/utils/UnauthorizedMixin.dart';
 import 'package:ewally/features/home/models/extrato_model.dart';
+import 'package:ewally/features/home/screen/widget/content_factory.dart';
 import 'package:ewally/features/home/usecases/buscar_extrato_usecase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +33,19 @@ class ExtratoCubit extends Cubit<ExtratoState> with UnauthorizedMixin {
     }
   }
 
+  void alterarTipoExibicao(
+    ExtratoModel extrato,
+    TipoExibicao tipoExibicao,
+  ) {
+    emit(LoadingExtratoState());
+    return emit(
+      ExtratoUsuarioReturn(
+        tipoExibicao: tipoExibicao,
+        extratoModel: extrato,
+      ),
+    );
+  }
+
   void buscarExtrato(String periodoInicio, String periodoFim) async {
     emit(LoadingExtratoState());
     final result = await _buscarExtratoUseCase(periodoInicio, periodoFim);
@@ -46,9 +60,12 @@ class ExtratoCubit extends Cubit<ExtratoState> with UnauthorizedMixin {
       }
       emit(ExtratoApiReturnError());
     }, (extratoUsuario) {
-      return emit(ExtratoUsuarioReturn(
-        extratoModel: extratoUsuario,
-      ));
+      return emit(
+        ExtratoUsuarioReturn(
+          tipoExibicao: TipoExibicao.LISTA,
+          extratoModel: extratoUsuario,
+        ),
+      );
     });
   }
 }

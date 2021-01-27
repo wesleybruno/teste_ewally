@@ -4,6 +4,7 @@ import 'package:ewally/configs/utils/ApiResult.dart';
 import 'package:ewally/configs/utils/Validadores.dart';
 import 'package:ewally/features/home/models/extrato_model.dart';
 import 'package:ewally/features/home/screen/bloc/extrato_cubit.dart';
+import 'package:ewally/features/home/screen/widget/content_factory.dart';
 import 'package:ewally/features/home/usecases/buscar_extrato_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -127,6 +128,7 @@ void main() {
         LoadingExtratoState(),
         ExtratoUsuarioReturn(
           extratoModel: tExtratoModel,
+          tipoExibicao: TipoExibicao.LISTA,
         )
       ],
     );

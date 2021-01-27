@@ -26,8 +26,12 @@ class DadosInvalidoState extends ExtratoState {
 
 class ExtratoUsuarioReturn extends ExtratoState {
   final ExtratoModel extratoModel;
+  final TipoExibicao tipoExibicao;
 
-  ExtratoUsuarioReturn({@required this.extratoModel});
+  ExtratoUsuarioReturn({
+    @required this.tipoExibicao,
+    @required this.extratoModel,
+  });
   @override
   List<Object> get props => [];
 }

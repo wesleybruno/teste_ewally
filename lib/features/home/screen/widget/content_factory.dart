@@ -1,7 +1,7 @@
 import 'package:ewally/configs/ui/Cores.dart';
 import 'package:ewally/configs/ui/DimensoesTela.dart';
 import 'package:ewally/configs/ui/Fontes.dart';
-import 'package:ewally/configs/ui/Strings.dart';
+import 'package:ewally/features/home/home_strings.dart';
 import 'package:ewally/features/home/models/extrato_model.dart';
 import 'package:ewally/configs/utils/DateTimeExtension.dart';
 import 'package:ewally/configs/utils/ValorMonetarioExtension.dart';
@@ -26,7 +26,7 @@ abstract class ContentFactory {
   static Widget _noData() {
     return Container(
       child: Text(
-        Strings.nenhumaInformacao,
+        HomeStrings.nenhumaInformacao,
         style: TextStyle(
           fontSize: 16.ssp,
           color: Cores.preto,
